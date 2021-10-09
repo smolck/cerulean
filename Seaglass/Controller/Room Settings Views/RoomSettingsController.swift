@@ -269,59 +269,61 @@ class RoomSettingsController: NSViewController {
             return
         }
         
-        RoomName.stringValue = room!.state.name ?? ""
-        RoomName.isEnabled = MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.name")
-        RoomName.isEditable = true
-        
-        RoomTopic.stringValue = room!.state.topic ?? ""
-        RoomTopic.isEnabled = MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.topic")
-        RoomTopic.isEditable = true
-        
-        RoomAvatar.setAvatar(forRoomId: roomId)
-        
-        initialRoomName = RoomName.stringValue
-        initialRoomTopic = RoomTopic.stringValue
-        
-        room!.getDirectoryVisibility(completion: { (visibility) in
-            if visibility.isSuccess {
-                self.RoomPublishInDirectory.isEnabled = true
-                self.RoomPublishInDirectory.state = visibility.value == .public ? .on : .off
-            } else {
-                self.RoomPublishInDirectory.state = .off
-            }
-            self.initialRoomPublishInDirectory = self.RoomPublishInDirectory.state
-        })
-        
-        let roomAccessEnabled =
-            MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.guest_access") &&
-            MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.join_rules")
-        
-        RoomAccessOnlyInvited.state = !room!.state.isJoinRulePublic ? .on : .off
-        RoomAccessExceptGuests.state = room!.state.isJoinRulePublic && room!.state.guestAccess == .forbidden ? .on : .off
-        RoomAccessIncludingGuests.state = room!.state.isJoinRulePublic && room!.state.guestAccess == .canJoin ? .on : .off
-        RoomAccessOnlyInvited.isEnabled = roomAccessEnabled
-        RoomAccessExceptGuests.isEnabled = roomAccessEnabled
-        RoomAccessIncludingGuests.isEnabled = roomAccessEnabled
-        
-        initialRoomAccessOnlyInvited = RoomAccessOnlyInvited.state
-        initialRoomAccessExceptGuests = RoomAccessExceptGuests.state
-        initialRoomAccessIncludingGuests = RoomAccessIncludingGuests.state
+        room!.state { [self] state in
+            let state = state!
+            RoomName.stringValue = state.name ?? ""
+            RoomName.isEnabled = MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.name")
+            RoomName.isEditable = true
+            
+            RoomTopic.stringValue = state.topic ?? ""
+            RoomTopic.isEnabled = MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.topic")
+            RoomTopic.isEditable = true
+            
+            RoomAvatar.setAvatar(forRoomId: roomId)
+            
+            initialRoomName = RoomName.stringValue
+            initialRoomTopic = RoomTopic.stringValue
+            
+            room!.getDirectoryVisibility(completion: { (visibility) in
+                if visibility.isSuccess {
+                    self.RoomPublishInDirectory.isEnabled = true
+                    self.RoomPublishInDirectory.state = visibility.value == .public ? .on : .off
+                } else {
+                    self.RoomPublishInDirectory.state = .off
+                }
+                self.initialRoomPublishInDirectory = self.RoomPublishInDirectory.state
+            })
+            
+            let roomAccessEnabled =
+                MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.guest_access") &&
+                MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.join_rules")
+            
+            RoomAccessOnlyInvited.state = !state.isJoinRulePublic ? .on : .off
+            RoomAccessExceptGuests.state = state.isJoinRulePublic && state.guestAccess == .forbidden ? .on : .off
+            RoomAccessIncludingGuests.state = state.isJoinRulePublic && state.guestAccess == .canJoin ? .on : .off
+            RoomAccessOnlyInvited.isEnabled = roomAccessEnabled
+            RoomAccessExceptGuests.isEnabled = roomAccessEnabled
+            RoomAccessIncludingGuests.isEnabled = roomAccessEnabled
+            
+            initialRoomAccessOnlyInvited = RoomAccessOnlyInvited.state
+            initialRoomAccessExceptGuests = RoomAccessExceptGuests.state
+            initialRoomAccessIncludingGuests = RoomAccessIncludingGuests.state
 
-        let roomHistoryEnabled = MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.history_visibility")
-        
-        RoomHistorySinceJoined.state = room!.state.historyVisibility == .joined ? .on : .off
-        RoomHistorySinceInvited.state = room!.state.historyVisibility == .invited ? .on : .off
-        RoomHistorySinceSelected.state = room!.state.historyVisibility == .shared ? .on : .off
-        RoomHistoryAnyone.state = room!.state.historyVisibility == .worldReadable ? .on : .off
-        RoomHistorySinceJoined.isEnabled = roomHistoryEnabled
-        RoomHistorySinceInvited.isEnabled = roomHistoryEnabled
-        RoomHistorySinceSelected.isEnabled = roomHistoryEnabled
-        RoomHistoryAnyone.isEnabled = roomHistoryEnabled
-        
-        initialRoomHistorySinceJoined = RoomHistorySinceJoined.state
-        initialRoomHistorySinceInvited = RoomHistorySinceInvited.state
-        initialRoomHistorySinceSelected = RoomHistorySinceSelected.state
-        initialRoomHistoryAnyone = RoomHistoryAnyone.state
+            let roomHistoryEnabled = MatrixServices.inst.userHasPower(inRoomId: room!.roomId, forEvent: "m.room.history_visibility")
+            
+            RoomHistorySinceJoined.state = state.historyVisibility == .joined ? .on : .off
+            RoomHistorySinceInvited.state = state.historyVisibility == .invited ? .on : .off
+            RoomHistorySinceSelected.state = state.historyVisibility == .shared ? .on : .off
+            RoomHistoryAnyone.state = state.historyVisibility == .worldReadable ? .on : .off
+            RoomHistorySinceJoined.isEnabled = roomHistoryEnabled
+            RoomHistorySinceInvited.isEnabled = roomHistoryEnabled
+            RoomHistorySinceSelected.isEnabled = roomHistoryEnabled
+            RoomHistoryAnyone.isEnabled = roomHistoryEnabled
+            
+            initialRoomHistorySinceJoined = RoomHistorySinceJoined.state
+            initialRoomHistorySinceInvited = RoomHistorySinceInvited.state
+            initialRoomHistorySinceSelected = RoomHistorySinceSelected.state
+            initialRoomHistoryAnyone = RoomHistoryAnyone.state
+        }
     }
-    
 }

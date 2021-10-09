@@ -37,7 +37,8 @@ class UserSettingsEncryptionController: UserSettingsTabController {
         DeviceNameSpinner.isHidden = false
         DeviceNameSpinner.startAnimation(self)
    
-        MatrixServices.inst.client.device(withId: MatrixServices.inst.client.credentials.deviceId, completion: { (response) in
+        MatrixServices.inst.client.device(withId: MatrixServices.inst.client.credentials.deviceId!, // TODO(smolck): exclamation
+                                          completion: { (response) in
             if response.isSuccess {
                 if let device = response.value {
                     self.DeviceName.stringValue = device.displayName ?? ""
@@ -47,7 +48,7 @@ class UserSettingsEncryptionController: UserSettingsTabController {
                 self.DeviceNameSpinner.isHidden = true
             }
         })
-        self.DeviceID.stringValue = MatrixServices.inst.client.credentials.deviceId
+        self.DeviceID.stringValue = MatrixServices.inst.client.credentials.deviceId! // TODO(smolck): exclamation
         self.DeviceKey.stringValue = String(MatrixServices.inst.session.crypto.deviceEd25519Key.enumerated().map { $0 > 0 && $0 % 4 == 0 ? [" ", $1] : [$1]}.joined())
         
         ParanoidMode.state = MatrixServices.inst.session.crypto.warnOnUnknowDevices ? .on : .off
@@ -101,7 +102,7 @@ class UserSettingsEncryptionController: UserSettingsTabController {
             }
         }
         
-        MatrixServices.inst.session.crypto.importRoomKeys(data!, withPassword: password.stringValue, success: {
+        MatrixServices.inst.session.crypto.importRoomKeys(data!, withPassword: password.stringValue, success: { _, _ in 
             let alert = NSAlert()
             alert.messageText = "Room keys imported"
             alert.informativeText = "Your encryption keys have been imported."

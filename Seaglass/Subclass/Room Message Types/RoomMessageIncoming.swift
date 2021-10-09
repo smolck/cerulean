@@ -53,10 +53,14 @@ class RoomMessageIncoming: RoomMessage {
         Avatar.setAvatar(forUserId: event!.sender)
         
         let icon = super.icon()
-        Icon.isHidden = !room.state.isEncrypted
-        Icon.image = icon.image
-        Icon.setFrameSize(room.state.isEncrypted ? NSMakeSize(icon.width, icon.height) : NSMakeSize(0, icon.height))
-        
+        room.state { state in
+            // TODO(smolck)
+            let state = state!
+            self.Icon.isHidden = !state.isEncrypted
+            self.Icon.image = icon.image
+            self.Icon.setFrameSize(state.isEncrypted ? NSMakeSize(icon.width, icon.height) : NSMakeSize(0, icon.height))
+        }
+       
         var finalTextColor = NSColor.textColor
         let displayname = MatrixServices.inst.session.myUser.displayname ?? MatrixServices.inst.session.myUser.userId
         
@@ -117,7 +121,9 @@ class RoomMessageIncoming: RoomMessage {
                     if event!.isMediaAttachment() {
                         if let filename = event?.content["filename"] as? String ?? event?.content["body"] as? String {
                             if let mxcUrl = event!.content["url"] as? String {
-                                let httpUrl = MatrixServices.inst.client.url(ofContent: mxcUrl)
+                                // TODO(smolck)
+                                // let httpUrl = MatrixServices.inst.client.url(ofContent: mxcUrl)
+                                let httpUrl = mxcUrl
                                 let link: NSMutableAttributedString = NSMutableAttributedString(string: filename)
                                 link.addAttribute(NSAttributedString.Key.link, value: httpUrl as Any, range: NSMakeRange(0, filename.count))
                                 link.setAlignment(NSTextAlignment.left, range: NSMakeRange(0, filename.count))
@@ -172,9 +178,13 @@ class RoomMessageIncoming: RoomMessage {
         Icon.event = event!
         switch event!.sentState {
         case MXEventSentStateFailed:
-            if !room!.state.isEncrypted {
-                Icon.isHidden = false
-                Icon.setFrameSize(NSMakeSize(icon.width, icon.height))
+            room!.state { state in
+                // TODO(smolck)
+                let state = state!
+                if !state.isEncrypted {
+                    self.Icon.isHidden = false
+                    self.Icon.setFrameSize(NSMakeSize(icon.width, icon.height))
+                }
             }
             Icon.image = NSImage(named: NSImage.refreshTemplateName)!.tint(with: NSColor.red)
             break

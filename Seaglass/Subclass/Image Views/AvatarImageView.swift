@@ -68,7 +68,8 @@ class AvatarImageView: ContextImageView {
         mxcUrl = forMxcUrl
         guard mxcUrl != nil else { return }
         
-        if mxcUrl!.hasPrefix("mxc://") {
+        // TODO(smolck): ?
+        /*if mxcUrl!.hasPrefix("mxc://") {
             url = MatrixServices.inst.client.url(ofContentThumbnail: forMxcUrl, toFitViewSize: CGSize(width: 96, height: 96), with: MXThumbnailingMethodScale)
             guard url != nil else { return }
             
@@ -105,7 +106,7 @@ class AvatarImageView: ContextImageView {
                     }
                 }
             }
-        }
+        }*/
     }
     
     func setAvatar(forUserId userId: String, useCached: Bool = true) {

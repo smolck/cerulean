@@ -38,7 +38,9 @@ class RoomMessage: NSTableCellView {
     func encryptionIsBlacklisted() -> Bool {
         guard event != nil && event!.isEncrypted else { return false }
         if let deviceInfo = MatrixServices.inst.session.crypto.eventSenderDevice(of: event) {
-            return deviceInfo.verified == MXDeviceBlocked
+            // TODO(smolck): ?
+            return false
+            // return deviceInfo.verified == MXDeviceBlocked
         }
         return false
     }
@@ -56,7 +58,7 @@ class RoomMessage: NSTableCellView {
     func encryptionIsVerified() -> Bool {
         guard event != nil else { return false }
         if let deviceInfo = MatrixServices.inst.session.crypto.eventSenderDevice(of: event!) {
-            return self.encryptionIsEncrypted() && deviceInfo.verified == MXDeviceVerified
+            return self.encryptionIsEncrypted() && deviceInfo.trustLevel.isVerified
         } else {
             return false
         }
@@ -90,7 +92,9 @@ class RoomMessage: NSTableCellView {
             return ""
         }
         if let room = MatrixServices.inst.session.room(withRoomId: event!.roomId) {
-            return room.state.memberName(event!.sender) ?? event!.sender as String
+            // TODO(smolck)
+            // return room.state.memberName(event!.sender) ?? event!.sender as String
+            return event!.sender as String
         }
         return ""
     }

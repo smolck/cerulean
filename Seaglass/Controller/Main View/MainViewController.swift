@@ -81,7 +81,7 @@ class MainViewController: NSSplitViewController, MatrixServicesDelegate {
         guard (request.requestBody["sender_key"] as? String) != nil else { return }
         guard !keyRequests.contains(where: { $0.request!.deviceId == request.deviceId }) else { return }
         
-        MatrixServices.inst.session.crypto.deviceList.downloadKeys([request.userId], forceDownload: false, success: { (devicemap) in
+        MatrixServices.inst.session.crypto.deviceList.downloadKeys([request.userId], forceDownload: false, success: { devicemap, _ in
             if MatrixServices.inst.session.crypto.deviceList.storedDevice(request.userId, deviceId: request.deviceId) != nil {
                 DispatchQueue.main.async {
                     let sheet = self.storyboard?.instantiateController(withIdentifier: "KeyRequest") as! MainViewKeyRequestController

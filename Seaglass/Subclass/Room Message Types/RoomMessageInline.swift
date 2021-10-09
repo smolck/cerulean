@@ -64,7 +64,9 @@ class RoomMessageInline: RoomMessage {
                 changes = ["membership"]
             }
             
-            let senderDisplayName = room.state.memberName(event.sender) ?? event.sender as String
+            // TODO(smolck)
+            // let senderDisplayName = room.state.memberName(event.sender) ?? event.sender as String
+            let senderDisplayName = event.sender as String
             let prevDisplayName =
                 event.prevContent != nil && event.prevContent.keys.contains("displayname") ?
                     event.prevContent["displayname"] as! String? :
@@ -145,12 +147,22 @@ class RoomMessageInline: RoomMessage {
             break
         case "m.room.create":
             guard let roomCreator = event.content["creator"] as? String else { break }
-            let displayName = MatrixServices.inst.session.room(withRoomId: roomId).state.memberName(roomCreator) ?? roomCreator
-            Text.stringValue = "Room created by \(displayName)"
+            MatrixServices.inst.session.room(withRoomId: roomId).state { state in
+                let state = state!
+                // TODO(smolck)
+                // let displayName = state.memberName(roomCreator) ?? roomCreator
+                // self.Text.stringValue = "Room created by \(displayName)"
+                self.Text.stringValue = "Room created by \(roomCreator)"
+            }
             break
         case "m.room.encryption":
-            let displayName = MatrixServices.inst.session.room(withRoomId: roomId).state.memberName(event.sender) ?? event.sender ?? "Room participant"
-            Text.stringValue = "\(displayName) enabled room encryption (\(event.content["algorithm"] ?? "unknown") algorithm)"
+            MatrixServices.inst.session.room(withRoomId: roomId).state { state in
+                let state = state!
+                // TODO(smolck)
+                // let displayName = .memberName(event.sender) ?? event.sender ?? "Room participant"
+                let displayName = event.sender ?? "Room participant"
+                self.Text.stringValue = "\(displayName) enabled room encryption (\(event.content["algorithm"] ?? "unknown") algorithm)"
+            }
             break
         default:
             guard let eventType = event.type else { break }

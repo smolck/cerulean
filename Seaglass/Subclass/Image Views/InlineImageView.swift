@@ -52,7 +52,8 @@ class InlineImageView: ContextImageView, QLPreviewItem, QLPreviewPanelDelegate, 
     func setImage(forMxcUrl: String?, withMimeType: String?, useCached: Bool = true, enableQuickLook: Bool = true) {
         guard let mxcURL = forMxcUrl else { return }
         
-        if mxcURL.hasPrefix("mxc://") {
+        // TODO(smolck)
+        /*if mxcURL.hasPrefix("mxc://") {
             guard let url = MatrixServices.inst.client.url(ofContentThumbnail: forMxcUrl, toFitViewSize: CGSize(width: 256, height: 256), with: MXThumbnailingMethodScale) else { return }
             guard let realurl = MatrixServices.inst.client.url(ofContent: forMxcUrl) else { return }
             
@@ -145,6 +146,6 @@ class InlineImageView: ContextImageView, QLPreviewItem, QLPreviewPanelDelegate, 
                     }
                 }
             }
-        }
+        }*/
     }
 }

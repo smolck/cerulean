@@ -72,7 +72,9 @@ class RoomPowerLevelsController: NSViewController {
         
         if roomId != "" {
             guard let room = MatrixServices.inst.session.room(withRoomId: roomId) else { return }
-            guard let powerLevels = room.state.powerLevels else { return }
+            
+            // TODO(smolck): ?
+            /*guard let powerLevels = room.state.powerLevels else { return }
             
             initialPowerLevelDefault = powerLevels.usersDefault
             initialPowerLevelSendMessage = powerLevels.eventsDefault
@@ -124,7 +126,7 @@ class RoomPowerLevelsController: NSViewController {
                     return powerLevel
                 }
                 return 100
-            }()
+            }()*/
             
             PowerLevelDefault.integerValue = initialPowerLevelDefault!
             PowerLevelSendMessage.integerValue = initialPowerLevelSendMessage!
