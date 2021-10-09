@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class RoomMessageIncoming: RoomMessage {
     @IBOutlet var From: NSTextField!

@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 import AFNetworking
 
 protocol MatrixServicesDelegate: AnyObject {

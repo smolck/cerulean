@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class MembersCacheEntry: NSObject {
     var member: MXRoomMember

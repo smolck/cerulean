@@ -35,8 +35,16 @@ class MainViewEncryptionController: NSViewController {
         ConfirmSpinner.alphaValue = 0
         
         if let room = MatrixServices.inst.session.room(withRoomId: roomId) {
-            EnableEncryptionCheckbox.state = room.state.isEncrypted ? .on : .off
-            EnableEncryptionCheckbox.isEnabled = EnableEncryptionCheckbox.state == .off
+            room.state({ state in
+                let isEncrypted: Bool
+                if let state = state {
+                    isEncrypted = state.isEncrypted
+                } else {
+                    isEncrypted = false
+                }
+                self.EnableEncryptionCheckbox.state = isEncrypted ? .on : .off
+                self.EnableEncryptionCheckbox.isEnabled = self.EnableEncryptionCheckbox.state == .off
+            })
         } else {
             EnableEncryptionCheckbox.isEnabled = false
         }

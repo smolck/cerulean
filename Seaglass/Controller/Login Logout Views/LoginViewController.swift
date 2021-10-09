@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class LoginViewController: NSViewController {
 
@@ -61,10 +61,10 @@ class LoginViewController: NSViewController {
             defaults.string(forKey: "UserID") != nil &&
             defaults.string(forKey: "AccessToken") != nil &&
             defaults.string(forKey: "DeviceID") != nil {
-            let credentials = MXCredentials(homeServer: defaults.string(forKey: "Homeserver"),
+            let credentials = MXCredentials(homeServer: defaults.string(forKey: "Homeserver") ?? "matrix.org", // TODO(smolck)
                                             userId: defaults.string(forKey: "UserID"),
                                             accessToken: defaults.string(forKey: "AccessToken"))
-            credentials!.deviceId = defaults.string(forKey: "DeviceID")
+            credentials.deviceId = defaults.string(forKey: "DeviceID")
 
             LoginButton.isEnabled = false
             CancelButton.title = "Cancel"
@@ -78,7 +78,7 @@ class LoginViewController: NSViewController {
             ProgressIndicator.startAnimation(self)
             
             print("Starting Matrix")
-            MatrixServices.inst.start(credentials!, disableCache: defaults.bool(forKey: "DisableCache"), success: {
+            MatrixServices.inst.start(credentials, disableCache: defaults.bool(forKey: "DisableCache"), success: {
                 print("Started successfully - handing over to main view")
                 self.performSegue(withIdentifier: "OpenMainView", sender: nil)
             }) {

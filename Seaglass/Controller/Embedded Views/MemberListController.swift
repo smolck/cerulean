@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class MemberListController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     @IBOutlet var membersCacheController: NSArrayController!

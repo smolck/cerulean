@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class MainViewJoinController: NSViewController {
     @IBOutlet weak var CreateRoomButton: NSButton!
