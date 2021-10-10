@@ -50,6 +50,9 @@ protocol MatrixRoomDelegate: AnyObject {
 }
 
 class MatrixServices: NSObject {
+    // TODO(smolck): Should probably make this homeserver configurable/figure it out based on . . . stuff
+    // I guess?
+    static let mediaManager = MXMediaManager(homeServer: "https://matrix.org")!
     static let inst = MatrixServices()
     static let credKey = "Matrix"
     
