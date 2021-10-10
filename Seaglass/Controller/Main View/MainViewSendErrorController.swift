@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class MainViewSendErrorController: NSViewController {
     @IBOutlet var ApplyAllCheckbox: NSButton!

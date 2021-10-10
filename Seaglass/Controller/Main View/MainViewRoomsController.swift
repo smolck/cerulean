@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class MainViewRoomsController: NSViewController, MatrixRoomsDelegate, NSTableViewDelegate, NSTableViewDataSource {
 
@@ -163,7 +163,7 @@ class MainViewRoomsController: NSViewController, MatrixRoomsDelegate, NSTableVie
                     cell?.RoomListEntryTopic.stringValue = "\(memberString)\n\(topicString)"
                     break
                 case true:
-                    let lastMessagePreview: String = state.room.summary.lastMessageEvent?.content["body"] as? String ?? ""
+                    let lastMessagePreview: String = state.room.summary.lastMessageEvent?.content?["body"] as? String ?? ""
                     cell?.RoomListEntryTopic.cell?.truncatesLastVisibleLine = true
                     cell?.RoomListEntryTopic.stringValue = lastMessagePreview
                     break

@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class ContextImageView: NSImageView {
     var handler: ((_: NSView, _: MXRoom?, _: MXEvent?, _: String?) -> ())?

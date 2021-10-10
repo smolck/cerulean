@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 @objcMembers class MatrixRoomCache: NSObject {
     

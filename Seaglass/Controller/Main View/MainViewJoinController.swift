@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class MainViewJoinController: NSViewController {
     @IBOutlet weak var CreateRoomButton: NSButton!
@@ -53,7 +53,14 @@ class MainViewJoinController: NSViewController {
             CreateRoomButton.animator().alphaValue = 0
             CreateRoomSpinner.alphaValue = 1
         }, completionHandler: {
-            MatrixServices.inst.session.createRoom(name: roomName, visibility: nil, alias: nil, topic: nil, preset: MXRoomPreset.publicChat, completion: { (response) in
+            MatrixServices.inst.session.createRoom(parameters: [
+                "name": roomName as Any,
+                // TODO(smolck): Are the explicit nils here necessary?
+                "visibility": nil,
+                "alias": nil,
+                "topic": nil,
+                "preset": MXRoomPreset.publicChat as Any
+            ], completion: { (response) in
                 if response.isFailure, let error = response.error {
                     let alert = NSAlert()
                     alert.messageText = "Failed to create room"
@@ -95,7 +102,14 @@ class MainViewJoinController: NSViewController {
                     sender.window?.contentViewController?.dismiss(sender)
                 })
             } else if room.starts(with: "@") {
-                MatrixServices.inst.session.createRoom(name: nil, visibility: nil, alias: nil, topic: nil, preset: MXRoomPreset.trustedPrivateChat, completion: { (response) in
+                MatrixServices.inst.session.createRoom(parameters: [
+                    // TODO(smolck): Explicit nils here necessary?
+                    "name": nil,
+                    "visibility": nil,
+                    "alias": nil,
+                    "topic": nil,
+                    "preset": MXRoomPreset.trustedPrivateChat as Any,
+                ], completion: { (response) in
                     if response.isFailure, let error = response.error {
                         let alert = NSAlert()
                         alert.messageText = "Failed to create room"

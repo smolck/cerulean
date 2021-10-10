@@ -1,66 +1,75 @@
 PODS:
-  - AFNetworking (3.2.1):
-    - AFNetworking/NSURLSession (= 3.2.1)
-    - AFNetworking/Reachability (= 3.2.1)
-    - AFNetworking/Security (= 3.2.1)
-    - AFNetworking/Serialization (= 3.2.1)
-    - AFNetworking/UIKit (= 3.2.1)
-  - AFNetworking/NSURLSession (3.2.1):
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.2.1)
-  - AFNetworking/Security (3.2.1)
-  - AFNetworking/Serialization (3.2.1)
-  - Down (0.5.2)
-  - GZIP (1.2.2)
-  - LetsMove (1.24)
-  - OLMKit (2.2.2):
-    - OLMKit/olmc (= 2.2.2)
-    - OLMKit/olmcpp (= 2.2.2)
-  - OLMKit/olmc (2.2.2)
-  - OLMKit/olmcpp (2.2.2)
-  - Realm (3.6.0):
-    - Realm/Headers (= 3.6.0)
-  - Realm/Headers (3.6.0)
-  - Sparkle (1.20.0)
-  - SwiftMatrixSDK (0.10.12):
-    - AFNetworking (~> 3.2.0)
-    - GZIP (~> 1.2.1)
-    - OLMKit (~> 2.2.2)
-    - Realm (~> 3.6.0)
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - Down (0.11.0)
+  - GZIP (1.3.0)
+  - LetsMove (1.25)
+  - libbase58 (0.1.4)
+  - MatrixSDK (0.17.4):
+    - MatrixSDK/Core (= 0.17.4)
+  - MatrixSDK/Core (0.17.4):
+    - AFNetworking (~> 4.0.0)
+    - GZIP (~> 1.3.0)
+    - libbase58 (~> 0.1.4)
+    - OLMKit (~> 3.1.0)
+    - Realm (= 10.1.4)
+  - MatrixSDK/SwiftSupport (0.17.4):
+    - MatrixSDK/Core
+  - OLMKit (3.1.0):
+    - OLMKit/olmc (= 3.1.0)
+    - OLMKit/olmcpp (= 3.1.0)
+  - OLMKit/olmc (3.1.0)
+  - OLMKit/olmcpp (3.1.0)
+  - Realm (10.1.4):
+    - Realm/Headers (= 10.1.4)
+  - Realm/Headers (10.1.4)
+  - Sparkle (1.27.0)
   - TSMarkdownParser (2.1.5)
 
 DEPENDENCIES:
   - Down
   - LetsMove
+  - MatrixSDK
+  - MatrixSDK/SwiftSupport
   - Sparkle
-  - SwiftMatrixSDK (= 0.10.12)
   - TSMarkdownParser
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - AFNetworking
     - Down
     - GZIP
     - LetsMove
+    - libbase58
+    - MatrixSDK
     - OLMKit
     - Realm
     - Sparkle
-    - SwiftMatrixSDK
     - TSMarkdownParser
 
 SPEC CHECKSUMS:
-  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  Down: 587371ad58002b06023d9c602519216862c3acbc
-  GZIP: 12374d285e3b5d46cfcd480700fcfc7e16caf4f1
-  LetsMove: fefe56bc7bc7fb7d37049e28a14f297961229fc5
-  OLMKit: b9d8c0ffee9ea8c45bc0aaa9afb47f93fba7efbd
-  Realm: 08b464b462d4f31bbd4ba5f5a1c8722ef0a700b7
-  Sparkle: 48999e7ee032f05ca05e28451eadf4af8ede6b44
-  SwiftMatrixSDK: 793d7505afe6cb8aa563c2c4c94613ef279bca87
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
+  Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
+  GZIP: 416858efbe66b41b206895ac6dfd5493200d95b3
+  LetsMove: 7b9fe44737707d984fbd3f47af46609a9a07b461
+  libbase58: 7c040313537b8c44b6e2d15586af8e21f7354efd
+  MatrixSDK: 39282219213aebf621326f6335073b5a2b1e9113
+  OLMKit: 4ee0159d63feeb86d836fdcfefe418e163511639
+  Realm: 80f4fb2971ccb9adc27a47d0955ae8e533a7030b
+  Sparkle: e1245ce5ba951c60183444a13a2c7d227778205d
   TSMarkdownParser: 3224ea196ecc7148fa7e03bc438f9390d4edfb6d
 
-PODFILE CHECKSUM: 3d7addb7b20fc302245d8951a9721bc1542434b1
+PODFILE CHECKSUM: 712c4ed913755efb1bea75abacec7035d171437a
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.11.2

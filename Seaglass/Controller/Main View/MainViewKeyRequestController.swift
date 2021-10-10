@@ -17,7 +17,7 @@
 //
 
 import Cocoa
-import SwiftMatrixSDK
+import MatrixSDK
 
 class MainViewKeyRequestController: NSViewController {
 
@@ -63,7 +63,7 @@ class MainViewKeyRequestController: NSViewController {
         guard ConfirmationCheckbox.state == .on else { return }
         
         MatrixServices.inst.session.crypto.acceptAllPendingKeyRequests(fromUser: request!.userId, andDevice: request!.deviceId) {
-            MatrixServices.inst.session.crypto.setDeviceVerification(MXDeviceVerified, forDevice: self.self.request!.deviceId, ofUser: self.request!.userId, success: {
+            MatrixServices.inst.session.crypto.setDeviceVerification(MXDeviceVerification.verified, forDevice: self.self.request!.deviceId, ofUser: self.request!.userId, success: {
                 MatrixServices.inst.mainController?.channelDelegate?.uiRoomNeedsCryptoReload()
             }, failure: { (error) in
                 let alert = NSAlert()
